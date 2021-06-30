@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+    <bean class = "com.vara.service.BankInterestCalculator" id="bankInterestService"/>
+    <bean class = "com.vara.aop.PerformanceAspect" id="perfAspect"/>
+<aop:config>
+    <aop:pointcut id="bipc" expression="execution(double com.vara.service.BankInterestCalculator.calculateSimpleInterest(..))"/>
+    <aop:aspect ref="perfAspect">
+        <aop:around method="calculatePerf" pointcut-ref="bipc"/>
+    </aop:aspect>
+</aop:config>
+<!--    <aop:config>-->
+<!--        <aop:pointcut id="bipc" expression="execution (float com.vara.service.BankInterestCalculator.calculateSimpleInterest(..))"/>-->
+<!--        <aop:aspect>-->
+<!--            <aop:around method="calculatePerf" pointcut-ref="bipc"/>-->
+<!--        </aop:aspect>-->
+<!--    </aop:config>-->
+</beans>
